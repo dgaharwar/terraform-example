@@ -103,7 +103,7 @@ bootstrapping code for database layer.
   > Include the following content in /etc/systemd/system/docker.service.d/30-dns.conf
   ```
   [Service]
-  Environment="DNS_OPTS=--dns 10.1.64.20 --dns 16.110.135.51"
+  Environment="DNS_OPTS=--dns <DNS_SERVER> --dns <DNS_SERVER>"
   ```
   > sudo systemctl daemon-reload
   > sudo systemctl restart docker
