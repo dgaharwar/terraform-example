@@ -1,0 +1,12 @@
+#cloud-config
+# Copyright 2020 Hewlett Packard Enterprise Development LP
+users:
+    - name: terraform
+
+runcmd:
+    #- export http_proxy=http://${proxy}
+    #- export https_proxy=http://${proxy}
+    - git clone https://github.com/siva-subramaniam-m/eShopOnContainers /tmp/eShopOnContainers
+    #- cd /tmp/eShopOnContainers/src && docker-compose -f docker-compose-db.yml -f docker-compose-db.override.yml build --build-arg http_proxy=http://${proxy} --build-arg https_proxy=http://${proxy}
+    - cd /tmp/eShopOnContainers/src && docker-compose -f docker-compose-db.yml -f docker-compose-db.override.yml build
+    - cd /tmp/eShopOnContainers/src && docker-compose -f docker-compose-db.yml -f docker-compose-db.override.yml up -d

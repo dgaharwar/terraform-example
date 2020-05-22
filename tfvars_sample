@@ -1,0 +1,7 @@
+# Copyright 2020 Hewlett Packard Enterprise Development LP
+
+vsphere_server    = "<vsphere_server>"
+vsphere_user      = "<vsphere_user>"
+vsphere_password  = "<vsphere_password>"
+template_username = "<template_username>"
+template_password = "<template_password>"

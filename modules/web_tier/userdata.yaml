@@ -1,0 +1,13 @@
+#cloud-config
+# Copyright 2020 Hewlett Packard Enterprise Development LP
+runcmd:
+    #- export http_proxy=http://${proxy}
+    #- export https_proxy=http://${proxy}
+    - export ESHOP_EXTERNAL_DNS_NAME_OR_IP=${app_ip_address}
+    - export ESHOP_STORAGE_CATALOG_URL=http://${app_ip_address}:5202/c/api/v1/catalog/items/[0]/pic/
+    - export ESHOP_STORAGE_MARKETING_URL=http://${app_ip_address}:5110/api/v1/campaigns/[0]/pic/
+    - export ESHOP_PROD_EXTERNAL_DNS_NAME_OR_IP=${ip_address}
+    - git clone https://github.com/siva-subramaniam-m/eShopOnContainers /tmp/eShopOnContainers
+    #- cd /tmp/eShopOnContainers/src && docker-compose -f docker-compose-web.yml -f docker-compose-web.override.yml build --build-arg http_proxy=http://${proxy} --build-arg https_proxy=http://${proxy}
+    - cd /tmp/eShopOnContainers/src && docker-compose -f docker-compose-web.yml -f docker-compose-web.override.yml build
+    - cd /tmp/eShopOnContainers/src && docker-compose -f docker-compose-web.yml -f docker-compose-web.override.yml up -d
