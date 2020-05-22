@@ -113,11 +113,7 @@ bootstrapping code for database layer.
 
 - Install [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html)
 
-- Clone customerzero project and go to e-shop directory for AWS: 
-
-   > git clone https://github.com/hpe-hcss/customerzero
-
-   > cd customerzero/infra/deployment/e-shop/terraform/vmware
+- Clone this project
 
 - Edit values under tfvars_sample file and rename it to terraform.tfvars.
 - Edit the values under variables.tf
