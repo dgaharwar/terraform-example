@@ -29,8 +29,8 @@ data template_file "metadata" {
   template = "${file("${path.module}/metadata.yaml")}"
   vars = {
     dhcp        = "${var.dhcp}"
-    hostname    = "${var.hostname}"
-    ip_address  = "${var.ip_address}"
+    app_hostname    = "${var.app_hostname}"
+    app_ip_address  = "${var.app_ip_address}"
     netmask     = "${var.netmask}"
     nameservers = "${jsonencode("${var.nameservers}")}"
     gateway     = "${var.gateway}"
@@ -40,7 +40,7 @@ data template_file "metadata" {
 data template_file "userdata" {
   template = "${file("${path.module}/userdata.yaml")}"
   vars = {
-    ip_address        = "${var.ip_address}"
+    app_ip_address        = "${var.app_ip_address}"
     db_ip_address     = "${var.db_ip_address}"
     web_ip_address    = "${var.web_ip_address}"
     template_username = "${var.template_username}"
@@ -50,10 +50,10 @@ data template_file "userdata" {
 
 }
 
-resource "null_resource" "is_db_instance_created" {
-  triggers = {
-    db_instance_id = "${var.db_instance_id}"
-  }
+#resource "null_resource" "is_db_instance_created" {
+#  triggers = {
+#    db_instance_id = "${var.db_instance_id}"
+#  }
   /*provisioner "remote-exec" {
     inline = [
       "cloud-init status -w"
@@ -65,11 +65,11 @@ resource "null_resource" "is_db_instance_created" {
       password = "${var.template_password}"
     }
   } */
-}
+#}
 
 resource "vsphere_virtual_machine" "app" {
-  depends_on                 = ["null_resource.is_db_instance_created"]
-  name                       = "${var.hostname}"
+  #depends_on                 = ["null_resource.is_db_instance_created"]
+  name                       = "${var.app_hostname}"
   resource_pool_id           = "${data.vsphere_resource_pool.pool.id}"
   datastore_id               = "${data.vsphere_datastore.datastore.id}"
   num_cpus                   = "${var.cpu}"

@@ -62,7 +62,7 @@ variable "dhcp" {
   description = "set it to true if environment using DHCP"
 }
 
-variable "ip_address" {
+variable "app_ip_address" {
   description = "IP address of DB server"
 }
 
@@ -78,7 +78,7 @@ variable "nameservers" {
   description = "list of name servers"
 }
 
-variable "hostname" {
+variable "app_hostname" {
   description = "A prefix for the virtual machine name."
 }
 
@@ -90,9 +90,9 @@ variable "web_ip_address" {
   description = "IP address of Web server"
 }
 
-variable "db_instance_id" {
-  description = "Workaround to avoid api instance creation before db instance. This variable will be updated after db instance is created"
-}
+#variable "db_instance_id" {
+#  description = "Workaround to avoid api instance creation before db instance. This variable will be updated after db instance is created"
+#}
 
 #variable "proxy" {
 #  type        = "string"

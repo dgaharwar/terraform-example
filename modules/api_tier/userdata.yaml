@@ -15,9 +15,9 @@ runcmd:
       sudo systemctl restart docker
       iptables -A DOCKER -j ACCEPT
       sshpass -p "${template_password}" ssh -o stricthostkeychecking=no ${template_username}@${db_ip_address} cloud-init status -w
-      export ESHOP_EXTERNAL_DNS_NAME_OR_IP=${ip_address}
-      export ESHOP_STORAGE_CATALOG_URL=http://${ip_address}:5202/c/api/v1/catalog/items/[0]/pic/
-      export ESHOP_STORAGE_MARKETING_URL=http://${ip_address}:5110/api/v1/campaigns/[0]/pic/
+      export ESHOP_EXTERNAL_DNS_NAME_OR_IP=${app_ip_address}
+      export ESHOP_STORAGE_CATALOG_URL=http://${app_ip_address}:5202/c/api/v1/catalog/items/[0]/pic/
+      export ESHOP_STORAGE_MARKETING_URL=http://${app_ip_address}:5110/api/v1/campaigns/[0]/pic/
       export ESHOP_PROD_EXTERNAL_DNS_NAME_OR_IP=${web_ip_address}
       export ESHOP_AZURE_REDIS_BASKET_DB=${db_ip_address}:6379
       export ESHOP_AZURE_COSMOSDB=mongodb://${db_ip_address}:27017

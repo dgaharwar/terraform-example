@@ -61,7 +61,7 @@ variable dhcp {
   description = "set it to true if environment using DHCP"
 }
 
-variable ip_address {
+variable db_ip_address {
   description = "IP address of DB server"
 }
 
@@ -77,7 +77,7 @@ variable nameservers {
   description = "list of name servers"
 }
 
-variable hostname {
+variable db_hostname {
   description = "A prefix for the virtual machine name."
 }
 

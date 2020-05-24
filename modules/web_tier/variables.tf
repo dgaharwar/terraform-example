@@ -63,8 +63,8 @@ variable "dhcp" {
   description = "set it to true if environment using DHCP"
 }
 
-variable "ip_address" {
-  description = "IP address of DB server"
+variable "web_ip_address" {
+  description = "IP address of WEB server"
 }
 
 variable "netmask" {
@@ -79,7 +79,7 @@ variable "nameservers" {
   description = "list of name servers"
 }
 
-variable "hostname" {
+variable "web_hostname" {
   description = "A prefix for the virtual machine name."
 }
 
@@ -87,9 +87,9 @@ variable "app_ip_address" {
   description = "IP address of App server"
 }
 
-variable "app_instance_id" {
-  description = "Workaround to avoid web instance creation before api instance. This variable will be updated after api instance is created"
-}
+#variable "app_instance_id" {
+#  description = "Workaround to avoid web instance creation before api instance. This variable will be updated after api instance is created"
+#}
 
 #variable proxy {
 #  type        = "string"

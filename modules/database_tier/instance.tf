@@ -29,8 +29,8 @@ data template_file "metadata" {
   template = "${file("${path.module}/metadata.yaml")}"
   vars = {
     dhcp        = "${var.dhcp}"
-    hostname    = "${var.hostname}"
-    ip_address  = "${var.ip_address}"
+    db_hostname    = "${var.db_hostname}"
+    db_ip_address  = "${var.db_ip_address}"
     netmask     = "${var.netmask}"
     nameservers = "${jsonencode(var.nameservers)}"
     gateway     = "${var.gateway}"
@@ -46,7 +46,7 @@ data template_file "userdata" {
 }
 
 resource "vsphere_virtual_machine" "db" {
-  name                       = "${var.hostname}"
+  name                       = "${var.db_hostname}"
   resource_pool_id           = "${data.vsphere_resource_pool.pool.id}"
   datastore_id               = "${data.vsphere_datastore.datastore.id}"
   num_cpus                   = "${var.cpu}"
