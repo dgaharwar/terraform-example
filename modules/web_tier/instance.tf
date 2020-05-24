@@ -42,7 +42,10 @@ data template_file "userdata" {
   vars = {
     ip_address     = "${var.ip_address}"
     app_ip_address = "${var.app_ip_address}"
-    #proxy          = "${var.proxy}"
+    nameservers = "${jsonencode(var.nameservers)}"
+    template_username  = "${var.template_username}"
+    template_password  = "${var.template_password}"
+    nameservers = "${jsonencode(var.nameservers)}"
   }
 
 }
@@ -51,7 +54,7 @@ resource "null_resource" "is_app_instance_created" {
   triggers = {
     app_instance_id = "${var.app_instance_id}"
   }
-  provisioner "remote-exec" {
+  /*provisioner "remote-exec" {
     inline = [
       "cloud-init status -w"
     ]
@@ -61,7 +64,7 @@ resource "null_resource" "is_app_instance_created" {
       user     = "${var.template_username}"
       password = "${var.template_password}"
     }
-  }
+  }*/
 }
 
 resource "vsphere_virtual_machine" "web" {
@@ -96,7 +99,7 @@ resource "vsphere_virtual_machine" "web" {
     "guestinfo.userdata.encoding" = "base64"
   }
 
-  provisioner "remote-exec" {
+  /*provisioner "remote-exec" {
     inline = [
       "cloud-init status -w"
     ]
@@ -106,5 +109,5 @@ resource "vsphere_virtual_machine" "web" {
       user     = "${var.template_username}"
       password = "${var.template_password}"
     }
-  }
+  }*/
 }

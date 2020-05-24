@@ -5,7 +5,7 @@ manage_etc_hosts: "localhost"
 network:
   version: 2
   ethernets:
-    ens160:
+    eth0:
       %{ if dhcp == "true" }dhcp4: true
       %{ else }addresses:
         - ${ip_address}/${netmask}

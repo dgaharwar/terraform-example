@@ -44,7 +44,7 @@ variable "web_ip_address" {
 
 variable "web_hostname" {
   type    = "string"
-  default = "eshop-app"
+  default = "eshop-web"
 
   description = "A prefix for the virtual machine name."
 }
@@ -150,7 +150,7 @@ variable "gateway" {
 
 variable "nameservers" {
   type        = "list"
-  default     = []
+  default     = ["8.8.8.8"]
   description = "list of name servers"
 }
 

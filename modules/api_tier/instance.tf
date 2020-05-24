@@ -43,7 +43,9 @@ data template_file "userdata" {
     ip_address     = "${var.ip_address}"
     db_ip_address  = "${var.db_ip_address}"
     web_ip_address = "${var.web_ip_address}"
-    #proxy          = "${var.proxy}"
+    template_username  = "${var.template_username}"
+    template_password  = "${var.template_password}"
+    nameservers = "${jsonencode(var.nameservers)}"
   }
 
 }
@@ -52,7 +54,7 @@ resource "null_resource" "is_db_instance_created" {
   triggers = {
     db_instance_id = "${var.db_instance_id}"
   }
-  provisioner "remote-exec" {
+  /*provisioner "remote-exec" {
     inline = [
       "cloud-init status -w"
     ]
@@ -62,7 +64,7 @@ resource "null_resource" "is_db_instance_created" {
       user     = "${var.template_username}"
       password = "${var.template_password}"
     }
-  }
+  } */
 }
 
 resource "vsphere_virtual_machine" "app" {

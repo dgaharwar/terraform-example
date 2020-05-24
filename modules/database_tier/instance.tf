@@ -40,9 +40,9 @@ data template_file "metadata" {
 data template_file "userdata" {
   template = "${file("${path.module}/userdata.yaml")}"
   vars = {
-    #proxy = "${var.proxy}"
+    nameservers = "${jsonencode(var.nameservers)}"
   }
-
+  
 }
 
 resource "vsphere_virtual_machine" "db" {
