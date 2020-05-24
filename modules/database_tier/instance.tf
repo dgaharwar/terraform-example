@@ -42,7 +42,7 @@ data template_file "userdata" {
   vars = {
     nameservers = "${jsonencode(var.nameservers)}"
   }
-  
+
 }
 
 resource "vsphere_virtual_machine" "db" {

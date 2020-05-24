@@ -40,12 +40,12 @@ data template_file "metadata" {
 data template_file "userdata" {
   template = "${file("${path.module}/userdata.yaml")}"
   vars = {
-    ip_address     = "${var.ip_address}"
-    app_ip_address = "${var.app_ip_address}"
-    nameservers = "${jsonencode(var.nameservers)}"
-    template_username  = "${var.template_username}"
-    template_password  = "${var.template_password}"
-    nameservers = "${jsonencode(var.nameservers)}"
+    ip_address        = "${var.ip_address}"
+    app_ip_address    = "${var.app_ip_address}"
+    nameservers       = "${jsonencode(var.nameservers)}"
+    template_username = "${var.template_username}"
+    template_password = "${var.template_password}"
+    nameservers       = "${jsonencode(var.nameservers)}"
   }
 
 }
