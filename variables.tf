@@ -133,7 +133,7 @@ variable "gateway" {
 }
 
 variable "nameservers" {
-  default     = ["8.8.8.8"]
+  #default     = ["8.8.8.8"]
   description = "list of name servers"
 }
 
