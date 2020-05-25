@@ -87,7 +87,8 @@ resource "vsphere_virtual_machine" "app" {
   }
   disk {
     label = "${var.disk_name}"
-    size  = "${var.disk_size}"
+    #size  = "${var.disk_size}"
+    size  = 60
   }
 
   clone {

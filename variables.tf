@@ -91,13 +91,13 @@ variable "disk_name" {
 
 }
 
-variable "disk_size" {
+/*variable "disk_size" {
 
   description = "Specify the disk size"
   default     = 60
 
 
-}
+}*/
 
 /*variable "cpu" {
 
