@@ -72,7 +72,8 @@ resource "vsphere_virtual_machine" "web" {
   name                       = "${var.web_hostname}"
   resource_pool_id           = "${data.vsphere_resource_pool.pool.id}"
   datastore_id               = "${data.vsphere_datastore.datastore.id}"
-  num_cpus                   = "${var.cpu}"
+  #num_cpus                   = "${var.cpu}"
+  num_cpus                   = 4
   #memory                     = "${var.memory}"
   memory           = 16384
   guest_id                   = "${data.vsphere_virtual_machine.template.guest_id}"

@@ -46,11 +46,11 @@ variable "disk_size" {
 
 }
 
-variable "cpu" {
+/*variable "cpu" {
 
   description = "Specify the number of CPUs"
 
-}
+}*/
 
 /*variable "memory" {
 

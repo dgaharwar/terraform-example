@@ -99,13 +99,13 @@ variable "disk_size" {
 
 }
 
-variable "cpu" {
+/*variable "cpu" {
 
   description = "Specify the number of CPUs"
   default     = "4"
 
 
-}
+}*/
 
 #variable "memory" {
 #
