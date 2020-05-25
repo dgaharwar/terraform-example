@@ -107,13 +107,11 @@ variable "cpu" {
 
 }
 
-variable "memory" {
- 
-  description = "Specify the memory size in MB"
-  default     = 16384
-
-
-}
+#variable "memory" {
+#
+#  description = "Specify the memory size in MB"
+#  default     = 16384
+#}
 
 variable "dhcp" {
   default     = "false"

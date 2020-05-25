@@ -51,11 +51,11 @@ variable "cpu" {
 
 }
 
-variable "memory" {
+/*variable "memory" {
 
   description = "Specify the memory size in MB"
 
-}
+}*/
 
 variable dhcp {
   description = "set it to true if environment using DHCP"

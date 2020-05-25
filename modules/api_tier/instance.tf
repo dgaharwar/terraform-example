@@ -73,7 +73,8 @@ resource "vsphere_virtual_machine" "app" {
   resource_pool_id           = "${data.vsphere_resource_pool.pool.id}"
   datastore_id               = "${data.vsphere_datastore.datastore.id}"
   num_cpus                   = "${var.cpu}"
-  memory                     = "${var.memory}"
+  #memory                     = "${var.memory}"
+  memory           = 16384
   guest_id                   = "${data.vsphere_virtual_machine.template.guest_id}"
   scsi_type                  = "${data.vsphere_virtual_machine.template.scsi_type}"
   wait_for_guest_net_timeout = 0
