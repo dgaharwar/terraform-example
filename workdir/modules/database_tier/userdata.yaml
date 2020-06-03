@@ -1,0 +1,16 @@
+#cloud-config
+# Copyright 2020 Hewlett Packard Enterprise Development LP
+write_files:
+    - path: /etc/systemd/system/docker.service.d/30-dns.conf
+      content: |
+        [Service]
+        Environment="DNS_OPTS=--dns ${nameservers}"
+runcmd:
+    - |
+      set -ex 
+      systemctl daemon-reload
+      sudo systemctl restart docker
+      iptables -A DOCKER -j ACCEPT
+      git clone https://github.com/siva-subramaniam-m/eShopOnContainers /tmp/eShopOnContainers
+      cd /tmp/eShopOnContainers/src && docker-compose -f docker-compose-db.yml -f docker-compose-db.override.yml build
+      cd /tmp/eShopOnContainers/src && docker-compose -f docker-compose-db.yml -f docker-compose-db.override.yml up -d

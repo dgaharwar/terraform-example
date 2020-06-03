@@ -1,0 +1,15 @@
+# Copyright 2020 Hewlett Packard Enterprise Development LP
+instance-id: ${db_hostname}
+local-hostname: ${db_hostname}
+manage_etc_hosts: "localhost"
+network:
+  version: 2
+  ethernets:
+    eth0:
+      %{ if dhcp == "true" }dhcp4: true
+      %{ else }addresses:
+        - ${db_ip_address}/${netmask}
+      gateway4: ${gateway}
+      nameservers:
+        addresses: ${nameservers}
+      %{ endif }
