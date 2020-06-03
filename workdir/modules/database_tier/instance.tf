@@ -2,6 +2,10 @@
 
 variable "cloudPassword" {}
 
+variable "cloudUserName" {}
+
+variable "cloudIP" {}
+
 variable "instanceNameDatabase" {}
 variable "instanceIPAddressDatabase" {}
 
@@ -15,9 +19,9 @@ variable "template" {}
 
 
 provider "vsphere" {
-                user = "raja@gemini.loc"
+                user = "${var.cloudUserName}"
                 password = "${var.cloudPassword}"
-                vsphere_server = "172.20.21.13"
+                vsphere_server = "${var.cloudIP}"
                 version = "~> 1.11"
                 # if you have a self-signed cert
                 allow_unverified_ssl = true
@@ -54,7 +58,8 @@ data "vsphere_network" "network" {
 }
 
 data template_file "metadata" {
-  template = "${file("${path.module}/metadata.yaml")}"
+  #template = "${file("${path.module}/metadata.yaml")}"
+  template = "${file("metadata.yaml")}"
   vars = {
     dhcp        = "false"
     db_hostname    = "${var.instanceNameDatabase}"
@@ -66,7 +71,8 @@ data template_file "metadata" {
 }
 
 data template_file "userdata" {
-  template = "${file("${path.module}/userdata.yaml")}"
+  #template = "${file("${path.module}/userdata.yaml")}"
+  template = "${file("userdata.yaml")}"
   vars = {
     nameservers = "${jsonencode(var.nameservers)}"
   }

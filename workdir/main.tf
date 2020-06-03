@@ -13,10 +13,16 @@ variable "gatewayDatabaseServer" {}
 
 variable "template" {}
 
+variable "cloudUserName" {}
+
+variable "cloudIP" {}
+
 module "database" {
   source           = "./modules/database_tier"
   
   cloudPassword = "${var.cloudPassword}"
+  cloudUserName = "${var.cloudUserName}"
+  cloudIP = "${var.cloudIP}"
   instanceNameDatabase = "${var.instanceNameDatabase}"
   instanceIPAddressDatabase       = "${var.instanceIPAddressDatabase}"
   nameservers = "${var.nameservers}"
