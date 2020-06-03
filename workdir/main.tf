@@ -11,6 +11,8 @@ variable "netmaskDatabaseServer" {}
 
 variable "gatewayDatabaseServer" {}
 
+variable "template" {}
+
 module "database" {
   source           = "./modules/database_tier"
   
@@ -20,4 +22,5 @@ module "database" {
   nameservers = "${var.nameservers}"
   netmaskDatabaseServer = "${var.netmaskDatabaseServer}"
   gatewayDatabaseServer = "${var.gatewayDatabaseServer}"
+  template = "${var.template}"
 }

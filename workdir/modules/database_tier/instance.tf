@@ -11,6 +11,9 @@ variable "netmaskDatabaseServer" {}
 
 variable "gatewayDatabaseServer" {}
 
+variable "template" {}
+
+
 provider "vsphere" {
                 user = "raja@gemini.loc"
                 password = "${var.cloudPassword}"
@@ -41,7 +44,7 @@ datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
 data "vsphere_virtual_machine" "template" {
-  name          = "eshopterraform"
+  name          = "${var.template}"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
