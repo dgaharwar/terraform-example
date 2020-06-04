@@ -100,7 +100,6 @@ data "vsphere_network" "network" {
 }
 
 data template_file "db_metadata" {
-  #template = "${file("${path.module}/metadata.yaml")}"
   template = "${file("db_metadata.yaml")}"
   vars = {
     dhcp        = "false"
@@ -113,7 +112,6 @@ data template_file "db_metadata" {
 }
 
 data template_file "db_userdata" {
-  #template = "${file("${path.module}/userdata.yaml")}"
   template = "${file("db_userdata.yaml")}"
   vars = {
     nameservers = "${jsonencode(var.nameservers)}"
@@ -154,7 +152,6 @@ resource "vsphere_virtual_machine" "db" {
 }
 
 data template_file "app_metadata" {
-  #template = "${file("${path.module}/metadata.yaml")}"
   template = "${file("app_metadata.yaml")}"
   vars = {
     dhcp        = "false"
@@ -167,7 +164,6 @@ data template_file "app_metadata" {
 }
 
 data template_file "app_userdata" {
-  #template = "${file("${path.module}/userdata.yaml")}"
   template = "${file("app_userdata.yaml")}"
   vars = {
     app_ip_address        = "${var.AppInstanceIPAddress}"
@@ -180,15 +176,8 @@ data template_file "app_userdata" {
 
 }
 
-#resource "null_resource" "is_db_instance_created" {
-#  triggers = {
-#    db_instance_id = "${vsphere_virtual_machine.db.outputs.db_instance_id}"
-#  }
-#}
-
-
 resource "vsphere_virtual_machine" "app" {
-  #depends_on                 = ["null_resource.is_db_instance_created"]
+  depends_on                 = ["vsphere_virtual_machine.db"]
   name                       = "${var.AppInstanceName}"
   resource_pool_id           = "${data.vsphere_resource_pool.pool.id}"
   datastore_id               = "${data.vsphere_datastore.datastore.id}"
@@ -220,14 +209,7 @@ resource "vsphere_virtual_machine" "app" {
 
 }
 
-#resource "null_resource" "is_app_instance_created" {
-#  triggers = {
-#    app_instance_id = "${vsphere_virtual_machine.app.outputs.app_instance_id}"
-#  }
-#}
-
 data template_file "web_metadata" {
-  #template = "${file("${path.module}/metadata.yaml")}"
   template = "${file("web_metadata.yaml")}"
   vars = {
     dhcp        = "false"
@@ -240,7 +222,6 @@ data template_file "web_metadata" {
 }
 
 data template_file "web_userdata" {
-  #template = "${file("${path.module}/userdata.yaml")}"
   template = "${file("web_userdata.yaml")}"
   vars = {
     web_ip_address        = "${var.WebInstanceIPAddress}"
@@ -253,7 +234,7 @@ data template_file "web_userdata" {
 }
 
 resource "vsphere_virtual_machine" "web" {
-  #depends_on                 = ["null_resource.is_app_instance_created"]
+  depends_on                 = ["vsphere_virtual_machine.app"]
   name                       = "${var.WebInstanceName}"
   resource_pool_id           = "${data.vsphere_resource_pool.pool.id}"
   datastore_id               = "${data.vsphere_datastore.datastore.id}"
