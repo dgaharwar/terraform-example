@@ -6,17 +6,59 @@ variable "cloudUserName" {}
 
 variable "cloudIP" {}
 
-variable "instanceNameDatabase" {}
-variable "instanceIPAddressDatabase" {}
+variable "DatabaseInstanceName" {
+  default = "eShopDatabase"
+}
+variable "DatabaseInstanceIPAddress" {
+  default = "172.16.20.130"
+}
+
+variable "netmaskDatabaseServer" {
+  default = "24"
+}
+
+variable "gatewayDatabaseServer" {
+  default = "172.16.20.1"
+}
+variable "AppInstanceName" {
+  default = "eShopApp"
+}
+variable "AppInstanceIPAddress" {
+  default = "172.16.20.131"
+}
+
+variable "netmaskAppServer" {
+  default = "24"
+}
+
+variable "gatewayAppServer" {
+  default = "172.16.20.1"
+}
+
+variable "WebInstanceName" {
+  default = "eShopWeb"
+}
+variable "WebInstanceIPAddress" {
+  default = "172.16.20.132"
+}
+
+variable "netmaskWebServer" {
+  default = "24"
+}
+
+variable "gatewayWebServer" {
+  default = "172.16.20.1"
+}
+
+variable "template" {
+  default = "eshopterraform"
+}
 
 variable "nameservers" {}
 
-variable "netmaskDatabaseServer" {}
+variable "TemplateUserName" {}
 
-variable "gatewayDatabaseServer" {}
-
-variable "template" {}
-
+variable "TemplatePassword" {}
 
 provider "vsphere" {
                 user = "${var.cloudUserName}"
@@ -57,22 +99,22 @@ data "vsphere_network" "network" {
                 datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
-data template_file "metadata" {
+data template_file "db_metadata" {
   #template = "${file("${path.module}/metadata.yaml")}"
-  template = "${file("metadata.yaml")}"
+  template = "${file("db_metadata.yaml")}"
   vars = {
     dhcp        = "false"
-    db_hostname    = "${var.instanceNameDatabase}"
-    db_ip_address  = "${var.instanceIPAddressDatabase}"
+    db_hostname    = "${var.DatabaseInstanceName}"
+    db_ip_address  = "${var.DatabaseInstanceIPAddress}"
     netmask     = "${var.netmaskDatabaseServer}"
     nameservers = "${jsonencode(var.nameservers)}"
     gateway     = "${var.gatewayDatabaseServer}"
   }
 }
 
-data template_file "userdata" {
+data template_file "db_userdata" {
   #template = "${file("${path.module}/userdata.yaml")}"
-  template = "${file("userdata.yaml")}"
+  template = "${file("db_userdata.yaml")}"
   vars = {
     nameservers = "${jsonencode(var.nameservers)}"
   }
@@ -80,7 +122,7 @@ data template_file "userdata" {
 }
 
 resource "vsphere_virtual_machine" "db" {
-  name                       = "${var.instanceNameDatabase}"
+  name                       = "${var.DatabaseInstanceName}"
   resource_pool_id           = "${data.vsphere_resource_pool.pool.id}"
   datastore_id               = "${data.vsphere_datastore.datastore.id}"
   num_cpus                   = 4
@@ -103,9 +145,141 @@ resource "vsphere_virtual_machine" "db" {
   }
 
   extra_config = {
-    "guestinfo.metadata"          = "${base64encode(data.template_file.metadata.rendered)}"
+    "guestinfo.metadata"          = "${base64encode(data.template_file.db_metadata.rendered)}"
     "guestinfo.metadata.encoding" = "base64"
-    "guestinfo.userdata"          = "${base64encode(data.template_file.userdata.rendered)}"
+    "guestinfo.userdata"          = "${base64encode(data.template_file.db_userdata.rendered)}"
+    "guestinfo.userdata.encoding" = "base64"
+  }
+
+}
+
+data template_file "app_metadata" {
+  #template = "${file("${path.module}/metadata.yaml")}"
+  template = "${file("app_metadata.yaml")}"
+  vars = {
+    dhcp        = "false"
+    app_hostname    = "${var.AppInstanceName}"
+    app_ip_address  = "${var.AppInstanceIPAddress}"
+    netmask     = "${var.netmaskAppServer}"
+    nameservers = "${jsonencode(var.nameservers)}"
+    gateway     = "${var.gatewayAppServer}"
+  }
+}
+
+data template_file "app_userdata" {
+  #template = "${file("${path.module}/userdata.yaml")}"
+  template = "${file("app_userdata.yaml")}"
+  vars = {
+    app_ip_address        = "${var.AppInstanceIPAddress}"
+    db_ip_address     = "${var.DatabaseInstanceIPAddress}"
+    web_ip_address    = "${var.WebInstanceIPAddress}"
+    template_username = "${var.TemplateUserName}"
+    template_password = "${var.TemplatePassword}"
+    nameservers = "${jsonencode(var.nameservers)}"
+  }
+
+}
+
+#resource "null_resource" "is_db_instance_created" {
+#  triggers = {
+#    db_instance_id = "${vsphere_virtual_machine.db.outputs.db_instance_id}"
+#  }
+#}
+
+
+resource "vsphere_virtual_machine" "app" {
+  #depends_on                 = ["null_resource.is_db_instance_created"]
+  name                       = "${var.AppInstanceName}"
+  resource_pool_id           = "${data.vsphere_resource_pool.pool.id}"
+  datastore_id               = "${data.vsphere_datastore.datastore.id}"
+  num_cpus                   = 4
+  memory                     = 16384
+  guest_id                   = "${data.vsphere_virtual_machine.template.guest_id}"
+  wait_for_guest_net_timeout = 0
+  network_interface {
+    network_id = "${data.vsphere_network.network.id}"
+  }
+  cdrom {
+    client_device = true
+  }
+  disk {
+    label = "root"
+    size  = 60
+  }
+
+  clone {
+    template_uuid = "${data.vsphere_virtual_machine.template.id}"
+  }
+
+  extra_config = {
+    "guestinfo.metadata"          = "${base64encode(data.template_file.app_metadata.rendered)}"
+    "guestinfo.metadata.encoding" = "base64"
+    "guestinfo.userdata"          = "${base64encode(data.template_file.app_userdata.rendered)}"
+    "guestinfo.userdata.encoding" = "base64"
+  }
+
+}
+
+#resource "null_resource" "is_app_instance_created" {
+#  triggers = {
+#    app_instance_id = "${vsphere_virtual_machine.app.outputs.app_instance_id}"
+#  }
+#}
+
+data template_file "web_metadata" {
+  #template = "${file("${path.module}/metadata.yaml")}"
+  template = "${file("web_metadata.yaml")}"
+  vars = {
+    dhcp        = "false"
+    web_hostname    = "${var.WebInstanceName}"
+    web_ip_address  = "${var.WebInstanceIPAddress}"
+    netmask     = "${var.netmaskWebServer}"
+    nameservers = "${jsonencode(var.nameservers)}"
+    gateway     = "${var.gatewayWebServer}"
+  }
+}
+
+data template_file "web_userdata" {
+  #template = "${file("${path.module}/userdata.yaml")}"
+  template = "${file("web_userdata.yaml")}"
+  vars = {
+    web_ip_address        = "${var.WebInstanceIPAddress}"
+    app_ip_address    = "${var.AppInstanceIPAddress}"
+    template_username = "${var.TemplateUserName}"
+    template_password = "${var.TemplatePassword}"
+    nameservers       = "${jsonencode(var.nameservers)}"
+  }
+
+}
+
+resource "vsphere_virtual_machine" "web" {
+  #depends_on                 = ["null_resource.is_app_instance_created"]
+  name                       = "${var.WebInstanceName}"
+  resource_pool_id           = "${data.vsphere_resource_pool.pool.id}"
+  datastore_id               = "${data.vsphere_datastore.datastore.id}"
+  num_cpus                   = 4
+  memory                     = 16384
+  guest_id                   = "${data.vsphere_virtual_machine.template.guest_id}"
+  wait_for_guest_net_timeout = 0
+  network_interface {
+    network_id = "${data.vsphere_network.network.id}"
+  }
+  cdrom {
+    client_device = true
+  }
+  disk {
+    label = "root"
+    size  = 60
+  }
+
+  clone {
+    template_uuid = "${data.vsphere_virtual_machine.template.id}"
+  }
+
+  extra_config = {
+    "guestinfo.metadata"          = "${base64encode(data.template_file.web_metadata.rendered)}"
+    "guestinfo.metadata.encoding" = "base64"
+    "guestinfo.userdata"          = "${base64encode(data.template_file.web_userdata.rendered)}"
     "guestinfo.userdata.encoding" = "base64"
   }
 

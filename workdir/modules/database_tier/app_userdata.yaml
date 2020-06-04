@@ -1,0 +1,30 @@
+#cloud-config
+# Copyright 2020 Hewlett Packard Enterprise Development LP
+package_update: true
+packages:
+    - sshpass
+write_files:
+    - path: /etc/systemd/system/docker.service.d/30-dns.conf
+      content: |
+        [Service]
+        Environment="DNS_OPTS=--dns ${nameservers}"
+runcmd:
+    - |
+      set -ex 
+      systemctl daemon-reload
+      sudo systemctl restart docker
+      iptables -A DOCKER -j ACCEPT
+      sshpass -p "${template_password}" ssh -o stricthostkeychecking=no ${template_username}@${db_ip_address} cloud-init status -w
+      export ESHOP_EXTERNAL_DNS_NAME_OR_IP=${app_ip_address}
+      export ESHOP_STORAGE_CATALOG_URL=http://${app_ip_address}:5202/c/api/v1/catalog/items/[0]/pic/
+      export ESHOP_STORAGE_MARKETING_URL=http://${app_ip_address}:5110/api/v1/campaigns/[0]/pic/
+      export ESHOP_PROD_EXTERNAL_DNS_NAME_OR_IP=${web_ip_address}
+      export ESHOP_AZURE_REDIS_BASKET_DB=${db_ip_address}:6379
+      export ESHOP_AZURE_COSMOSDB=mongodb://${db_ip_address}:27017
+      export ESHOP_AZURE_CATALOG_DB="Server=${db_ip_address},5433;Database=Microsoft.eShopOnContainers.Service.IdentityDb;User Id=sa;Password=Pass@word"
+      export ESHOP_AZURE_IDENTITY_DB="Server=${db_ip_address},5433;Database=Microsoft.eShopOnContainers.Service.CatalogDb;User Id=sa;Password=Pass@word"
+      export ESHOP_AZURE_ORDERING_DB="Server=${db_ip_address},5433;Database=Microsoft.eShopOnContainers.Service.OrderingDb;User Id=sa;Password=Pass@word"
+      export ESHOP_AZURE_MARKETING_DB="Server=${db_ip_address},5433;Database=Microsoft.eShopOnContainers.Service.MarketingDb;User Id=sa;Password=Pass@word"
+      git clone https://github.com/siva-subramaniam-m/eShopOnContainers /tmp/eShopOnContainers
+      cd /tmp/eShopOnContainers/src && docker-compose -f docker-compose-api.yml -f docker-compose-api.override.yml build
+      cd /tmp/eShopOnContainers/src && docker-compose -f docker-compose-api.yml -f docker-compose-api.override.yml up -d
