@@ -1,15 +1,15 @@
 # Copyright 2020 Hewlett Packard Enterprise Development LP
 
 variable "cloudPassword" {
-  default = "Hpinvent@123"
+  default = "Pa$$w0rd"
   }
 
 variable "cloudUserName" {
-  default = "Administrator@vsphere.local"
+  default = "altocumulusadmin@gemini.loc"
   }
 
 variable "cloudIP" {
-  default = "10.202.40.204"
+  default = "172.20.21.60"
   }
 
 variable "DatabaseInstanceName" {
