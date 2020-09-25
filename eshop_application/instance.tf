@@ -1,10 +1,16 @@
 # Copyright 2020 Hewlett Packard Enterprise Development LP
 
-variable "cloudPassword" {}
+variable "cloudPassword" {
+  default = "Hpinvent@123"
+  }
 
-variable "cloudUserName" {}
+variable "cloudUserName" {
+  default = Administrator@vsphere.local
+  }
 
-variable "cloudIP" {}
+variable "cloudIP" {
+  default = 10.202.40.204
+  }
 
 variable "DatabaseInstanceName" {
   default = "eShopDatabase"
