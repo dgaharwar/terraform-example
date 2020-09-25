@@ -1,16 +1,10 @@
 # Copyright 2020 Hewlett Packard Enterprise Development LP
 
-variable "cloudPassword" {
-  default = "Pa$$w0rd"
-  }
+variable "cloudPassword" {}
 
-variable "cloudUserName" {
-  default = "altocumulusadmin@gemini.loc"
-  }
+variable "cloudUserName" {}
 
-variable "cloudIP" {
-  default = "172.20.21.60"
-  }
+variable "cloudIP" {}
 
 variable "DatabaseInstanceName" {
   default = "eShopDatabase"
@@ -57,7 +51,7 @@ variable "gatewayWebServer" {
 }
 
 variable "template" {
-  default = "eshopterraform"
+  default = "vanilla-centos-7-x86_64-18062020"
 }
 
 variable "nameservers" {}
@@ -101,7 +95,7 @@ data "vsphere_virtual_machine" "template" {
 }
 
 data "vsphere_network" "network" {
-                name = "vxw-dvs-693-virtualwire-5-sid-5001-Green-Net"
+                name = "vxw-dvs-693-virtualwire-5-sid-5001-Black-Network-1"
                 datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
