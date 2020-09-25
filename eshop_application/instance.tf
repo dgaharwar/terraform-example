@@ -21,7 +21,7 @@ variable "gatewayDatabaseServer" {
   default = "10.70.0.1"
 }
 variable "AppInstanceName" {
-  default = "eShopApp"
+  default = "vanilla-centos-7-x86_64-18062020"
 }
 variable "AppInstanceIPAddress" {
   default = "10.70.50.11"
@@ -51,7 +51,7 @@ variable "gatewayWebServer" {
 }
 
 variable "template" {
-  default = "vanilla-centos-7-x86_64-18062020"
+  default = "Eshop-App"
 }
 
 variable "nameservers" {}
@@ -74,7 +74,7 @@ data "vsphere_datacenter" "dc" {
 }
 
 data "vsphere_datastore" "datastore" {
-                name = "3PAR_Shared2"
+                name = "3PAR-Shared2"
                 datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
@@ -95,7 +95,7 @@ data "vsphere_virtual_machine" "template" {
 }
 
 data "vsphere_network" "network" {
-                name = "vxw-dvs-693-virtualwire-5-sid-5001-Black-Network-1"
+                name = "vxw-dvs-53-virtualwire-100-sid-5000-Black-Network-1"
                 datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
