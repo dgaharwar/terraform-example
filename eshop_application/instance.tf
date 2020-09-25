@@ -5,55 +5,55 @@ variable "cloudPassword" {
   }
 
 variable "cloudUserName" {
-  default = Administrator@vsphere.local
+  default = "Administrator@vsphere.local"
   }
 
 variable "cloudIP" {
-  default = 10.202.40.204
+  default = "10.202.40.204"
   }
 
 variable "DatabaseInstanceName" {
   default = "eShopDatabase"
 }
 variable "DatabaseInstanceIPAddress" {
-  default = "172.16.20.130"
+  default = "10.70.50.10"
 }
 
 variable "netmaskDatabaseServer" {
-  default = "24"
+  default = "16"
 }
 
 variable "gatewayDatabaseServer" {
-  default = "172.16.20.1"
+  default = "10.70.0.1"
 }
 variable "AppInstanceName" {
   default = "eShopApp"
 }
 variable "AppInstanceIPAddress" {
-  default = "172.16.20.131"
+  default = "10.70.50.11"
 }
 
 variable "netmaskAppServer" {
-  default = "24"
+  default = "16"
 }
 
 variable "gatewayAppServer" {
-  default = "172.16.20.1"
+  default = "10.70.0.1"
 }
 
 variable "WebInstanceName" {
   default = "eShopWeb"
 }
 variable "WebInstanceIPAddress" {
-  default = "172.16.20.132"
+  default = "10.70.50.12"
 }
 
 variable "netmaskWebServer" {
-  default = "24"
+  default = "16"
 }
 
 variable "gatewayWebServer" {
-  default = "172.16.20.1"
+  default = "10.70.0.1"
 }
 
 variable "template" {
