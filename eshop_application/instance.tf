@@ -80,7 +80,7 @@ data "vsphere_datacenter" "dc" {
 }
 
 data "vsphere_datastore" "datastore" {
-                name = "3PAR_A64G-10TB-C3-01"
+                name = "3PAR_Shared2"
                 datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
