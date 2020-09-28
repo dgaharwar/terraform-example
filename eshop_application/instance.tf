@@ -10,44 +10,44 @@ variable "DatabaseInstanceName" {
   default = "eShopDatabase"
 }
 variable "DatabaseInstanceIPAddress" {
-  default = "10.70.50.10"
+  default = "172.16.83.101"
 }
 
 variable "netmaskDatabaseServer" {
-  default = "16"
+  default = "24"
 }
 
 variable "gatewayDatabaseServer" {
-  default = "10.70.0.1"
+  default = "172.16.83.1"
 }
 variable "AppInstanceName" {
-  default = "vanilla-centos-7-x86_64-18062020"
+  default = "eshop-image"
 }
 variable "AppInstanceIPAddress" {
-  default = "10.70.50.11"
+  default = "172.16.83.102"
 }
 
 variable "netmaskAppServer" {
-  default = "16"
+  default = "24"
 }
 
 variable "gatewayAppServer" {
-  default = "10.70.0.1"
+  default = "172.16.83.1"
 }
 
 variable "WebInstanceName" {
   default = "eShopWeb"
 }
 variable "WebInstanceIPAddress" {
-  default = "10.70.50.12"
+  default = "172.16.83.103"
 }
 
 variable "netmaskWebServer" {
-  default = "16"
+  default = "24"
 }
 
 variable "gatewayWebServer" {
-  default = "10.70.0.1"
+  default = "172.16.83.1"
 }
 
 variable "template" {
