@@ -51,7 +51,7 @@ variable "gatewayWebServer" {
 }
 
 variable "template" {
-  default = "Eshop-App"
+  default = "eshopterraform"
 }
 
 variable "nameservers" {}
