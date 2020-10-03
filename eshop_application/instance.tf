@@ -7,7 +7,7 @@ variable "cloudUserName" {}
 variable "cloudIP" {}
 
 variable "DatabaseInstanceName" {
-  default = "eShopDatabase"
+  default = "eShopDatabase2"
 }
 variable "DatabaseInstanceIPAddress" {
   default = "172.16.83.101"
@@ -21,7 +21,7 @@ variable "gatewayDatabaseServer" {
   default = "172.16.83.1"
 }
 variable "AppInstanceName" {
-  default = "eshop-image"
+  default = "eshopApp2"
 }
 variable "AppInstanceIPAddress" {
   default = "172.16.83.102"
@@ -36,7 +36,7 @@ variable "gatewayAppServer" {
 }
 
 variable "WebInstanceName" {
-  default = "eShopWeb"
+  default = "eShopWeb2"
 }
 variable "WebInstanceIPAddress" {
   default = "172.16.83.103"
@@ -51,7 +51,7 @@ variable "gatewayWebServer" {
 }
 
 variable "template" {
-  default = "eshopterraform"
+  default = "eshoptfimage"
 }
 
 variable "nameservers" {}
