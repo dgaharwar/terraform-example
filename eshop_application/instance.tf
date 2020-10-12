@@ -134,10 +134,10 @@ resource "vsphere_virtual_machine" "db" {
     client_device = true
   }
   disk {
-    label = "root"
+    label = "disk0"
     size  = 60
-    thin_provisioned  = true
-   # eagerly_scrub = true    
+    thin_provisioned  = false
+    eagerly_scrub = true    
   }
 
   clone {
