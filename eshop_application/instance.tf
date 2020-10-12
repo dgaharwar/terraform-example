@@ -136,6 +136,8 @@ resource "vsphere_virtual_machine" "db" {
   disk {
     label = "root"
     size  = 60
+    thin_provisioned  = false
+    eagerly_scrub = true    
   }
 
   clone {
