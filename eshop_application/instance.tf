@@ -194,8 +194,10 @@ resource "vsphere_virtual_machine" "app" {
     client_device = true
   }
   disk {
-    label = "root"
+    label = "disk0"
     size  = 60
+    thin_provisioned  = false
+    eagerly_scrub = true
   }
 
   clone {
