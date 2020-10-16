@@ -54,7 +54,9 @@ variable "template" {
   default = "eshoptfimage"
 }
 
-variable "nameservers" {}
+variable "nameservers" {
+  default = "8.8.8.8"
+  }
 
 variable "TemplateUserName" {}
 
