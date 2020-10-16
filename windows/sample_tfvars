@@ -1,7 +1,0 @@
-# Copyright 2020 Hewlett Packard Enterprise Development LP
-
-cloudIP    = "10.202.40.204"
-cloudUserName      = "Administrator@vsphere.local"
-cloudPassword  = "Pa$$w0rd"
-TemplateUserName = "Administrator"
-TemplatePassword = "Pa$$w0rd"
